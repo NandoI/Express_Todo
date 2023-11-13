@@ -1,14 +1,8 @@
 const express = require('express')
+const { regis, login } = require('../controllers/auth.controller')
 const route = express.Router()
 
-route.post('/login', () => {
-
-})
-
-route.post('/regis', (req,res) => {
-    let data = req.body
-
-    console.log(data)
-})
+route.post('/regis', regis)
+route.get('/login', login)
 
 module.exports = route

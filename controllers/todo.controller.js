@@ -87,4 +87,32 @@ module.exports = {
             });
         }
     },
+
+    updateTodo: async (req, res) => {
+        try {
+            const todoId = req.params.id;
+            const todoData = req.body;
+
+            const todo = await Todo.findByPk(todoId);
+
+            if (!todo) {
+                return res.status(404).json({
+                    message: "Todo tidak ditemukan"
+                });
+            }
+
+            await todo.update(todoData);
+
+            res.json({
+                message: "Data todo berhasil diupdate",
+                data: todo
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: 'Gagal mengupdate data todo',
+                error: error.message
+            });
+        }
+    },
+
 };

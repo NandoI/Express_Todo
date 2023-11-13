@@ -53,5 +53,32 @@ module.exports = {
                 }
             )
         }
-    }
+    },
+
+    updateUser: async (req, res) => {
+        try {
+            const userId = req.params.id;
+            const userData = req.body;
+
+            const user = await User.findByPk(userId);
+
+            if (!user) {
+                return res.status(404).json({
+                    message: "User tidak ditemukan"
+                });
+            }
+
+            await user.update(userData);
+
+            res.json({
+                message: "Data user berhasil diupdate",
+                data: user
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: 'Gagal mengupdate data user',
+                error: error.message
+            });
+        }
+    },
 };

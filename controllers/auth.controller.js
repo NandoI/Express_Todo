@@ -1,5 +1,6 @@
 const { User } = require('../models');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 
 module.exports = {
     regis: async (req, res) => {
@@ -32,7 +33,10 @@ module.exports = {
             const passwordMatch = await bcrypt.compare(data.password, user.password);
 
             if (passwordMatch) {
-                res.json({ message: "Berhasil login" });
+                const token = jwt.sign({
+                    email: data.email
+                },"adnfjasnefanejnjn")
+                res.json({ message: "Berhasil login",token });
             } else {
                 res.json({ message: "Kombinasi email dan password salah" });
             }
